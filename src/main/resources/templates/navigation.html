@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navigation(type)">
+  <div class="layui-header" style="background-color:#E5E5E5;box-shadow: 0 9px 5px rgba(0,21,41,.08);">
+    <div class="layui-logo" >
+      <a class="logo" href="/">
+        <img th:src="@{/images/logo.jpg}" alt="众晟" th:width="180px" th:height="58px">
+      </a>
+    </div>
+    <ul class="layui-nav" style="float: right;margin-right: auto">
+      <!--<li class="layui-nav-item">-->
+        <!--<a href="">控制台<span class="layui-badge">9</span></a>-->
+      <!--</li>-->
+      <!--<li class="layui-nav-item">-->
+        <!--<a href="">个人中心<span class="layui-badge-dot"></span></a>-->
+      <!--</li>-->
+      <li class="layui-nav-item" lay-unselect="">
+        <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img" > <span th:text="${session.user.name}" style="color: #0C0C0C"></span></a>
+        <dl class="layui-nav-child">
+          <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+          <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+          <dd><a href="/logout">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  <div class="layui-side" style="background: #5B5B5B">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree " style="background: #5B5B5B" lay-filter="test">
+        <li th:class="${type==1?'layui-nav-item layui-this':'layui-nav-item'}">
+          <a href="/consumer-info/index" >&nbsp;&nbsp;<i class="layui-icon layui-icon-friends" style="font-size: 20px;"></i>&nbsp;客户信息</a>
+        </li>
+        <li th:class="${type==2?'layui-nav-item layui-this':'layui-nav-item'}">
+          <a href="/consumer-record/index" >&nbsp;&nbsp;<i class="layui-icon layui-icon-chart-screen" style="font-size: 20px;"></i>&nbsp;销售登记</a>
+        </li>
+        <li th:class="${type==3?'layui-nav-item layui-this':'layui-nav-item'}">
+          <a href="/self-record/index">&nbsp;&nbsp;<i class="layui-icon layui-icon-chart-screen" style="font-size: 20px;"></i>&nbsp;个人收支</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</html>

@@ -1,0 +1,59 @@
+server:
+  port: 9898
+
+spring:
+  application:
+    name: timber
+  resources:
+     static-locations: classpath:/static/
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driverClassName: com.mysql.jdbc.Driver
+    filters: stat,wall,log4j
+    initialSize: 5
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 24800
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://10.1.32.69:3306/chang?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 1qaz@WSX
+    validationQuery: SELECT 1 FROM DUAL
+  mvc:
+    favicon:
+      enabled: false
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:config/mybatis-config.xml
+
+
+pagehelper:
+    helper-dialect: mysql
+    reasonable: false
+    support-methods-arguments: true
+    params: count=countSql
+
+logging:
+  level:
+    com.chang.dao: debug
+
+userInfoSessionKey: user
+
+

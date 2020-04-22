@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--<title>客户编辑</title>-->
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+</head>
+<style>
+    .layui-form-item {
+        margin-top: 30px;
+    }
+    .layui-form-label {
+       font-weight:bold;
+    }
+</style>
+<body>
+<div class="layui-layout layui-layout-admin" style="margin-left: 40px;margin-top: 40px;font-size: 16px;margin-right: 40px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户名称：</label>
+        <label class="layui-form-label-col" th:text="${e.consumerName}">客户名称客户名称客户名称客户名称客户名称客户名称客户名称客户名称客户名称</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码：</label>
+        <label class="layui-form-label-col" th:text="${e.tel}"></label>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注：</label>
+        <label class="layui-form-label-col" th:text="${e.remarks}"></label>
+    </div>
+</div>
+</body>
+</html>

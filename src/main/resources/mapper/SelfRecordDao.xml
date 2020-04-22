@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chang.dao.SelfRecordDao">
+
+    <sql id="BASE_LIST">
+       id, access_time_date, descs, money, type, create_user_id, create_date, update_user_id, update_date
+    </sql>
+
+    <select id="list" resultType="com.chang.entity.SelfRecordEntity">
+      SELECT
+      <include refid="BASE_LIST"/>
+        FROM timber_self_record
+        WHERE 1=1
+        <if test="type != null">
+            AND type = #{type}
+        </if>
+        <if test="descs != null and descs != ''">
+            AND descs LIKE '%${descs}%'
+        </if>
+        <if test="accessTimeDates != null">
+            AND access_time_date &gt;= '${accessTimeDates[0]}'
+            AND access_time_date &lt;= '${accessTimeDates[1]}'
+        </if>
+    </select>
+    <select id="getById" resultType="com.chang.entity.SelfRecordEntity">
+      SELECT
+      <include refid="BASE_LIST"/>
+        FROM timber_self_record
+        WHERE id = #{value}
+    </select>
+
+    <insert id="insertSelfRecord">
+        INSERT INTO timber_self_record SET
+        <if test="id != null">
+            id = #{id},
+        </if>
+        <if test="accessTimeDate != null">
+            access_time_date = #{accessTimeDate},
+        </if>
+        <if test="descs != null">
+            descs = #{descs},
+        </if>
+        <if test="money != null">
+            money = #{money},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="createUserId != null">
+            create_user_id = #{createUserId},
+        </if>
+        <if test="updateUserId != null">
+            update_user_id = #{updateUserId},
+        </if>
+        create_date = now(),
+        update_date = now()
+    </insert>
+    <insert id="updateSelfRecord">
+        UPDATE timber_self_record SET
+        <if test="accessTimeDate != null">
+            access_time_date = #{accessTimeDate},
+        </if>
+        <if test="descs != null">
+            descs = #{descs},
+        </if>
+        <if test="money != null">
+            money = #{money},
+        </if>
+        <if test="type != null">
+            type = #{type},
+        </if>
+        <if test="updateUserId != null">
+            update_user_id = #{updateUserId},
+        </if>
+        update_date = now()
+        WHERE id = #{id}
+    </insert>
+    <delete id="deleteById">
+        DELETE FROM timber_self_record WHERE id = #{value}
+    </delete>
+
+</mapper>

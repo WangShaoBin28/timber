@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>销售登记</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+</head>
+<style>
+    .layui-input-block{width: 400px}
+</style>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div th:include="navigation :: navigation(2)"></div>
+    <div class="layui-body">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 60px;">
+            <legend><strong style="font-size: 30px">销售登记编辑</strong></legend>
+        </fieldset>
+        <form class="layui-form" style="margin-left: 80px;">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 60px; margin-left: 40px">
+                <legend style="font-size: 25px">收入</legend>
+            </fieldset>
+            <div class="layui-form-item" hidden>
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="id" class="layui-input" th:value="${e.id}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">记录时间：</label>
+                <div class="layui-input-block">
+                    <input th:name="accessTimeDate" type="text" class="layui-input" id="accessTimeDate2" placeholder="请选择记录时间"
+                           th:value="${#dates.format(e.accessTimeDate, 'yyyy-MM-dd')}" autocomplete="off" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">客户名称：</label>
+                <div class="layui-input-block">
+                    <select  name="consumerId" class="form‐control" lay-verify="required">
+                        <option value="" th:text="-请选择-"></option>
+                        <option th:selected="${selectModels['key']== e.consumerId}" th:value="${selectModels['key']}" th:each="selectModels:${selectModels}" th:text="${selectModels['value']}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">地址：</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" class="layui-textarea" th:name="consumerAddress" lay-verify="textarea"
+                              th:text="${e.consumerAddress}"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">安装时间：</label>
+                <div class="layui-input-block">
+                    <input th:name="installDate" type="text" class="layui-input" id="installDate" placeholder="请选择安装时间"
+                           th:value="${#dates.format(e.installDate, 'yyyy-MM-dd')}" autocomplete="off" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">合同金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="contractMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入合同金额"
+                           class="layui-input" th:value="${e.contractMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">一期款：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="moneyOne" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入一期款金额"
+                           class="layui-input incomeMoney" th:value="${e.moneyOne}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">二期款：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="moneyTwo" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入二期款金额"
+                           class="layui-input incomeMoney" th:value="${e.moneyTwo}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">三期款：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="moneyThree" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入三期款金额"
+                           class="layui-input incomeMoney" th:value="${e.moneyThree}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">总金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" readonly id="incomeAllMoney"
+                           autocomplete="off"
+                           class="layui-input profitMoneys" th:value="${e.incomeAllMoney}" style="background-color:#BEBEBE">
+                </div>
+            </div>
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 60px;margin-left: 40px">
+                <legend style="font-size: 25px">支出</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <label class="layui-form-label">一期款：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="disburseMoneyOne" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入一期款金额"
+                           class="layui-input payMoney" th:value="${e.disburseMoneyOne}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">厂家打款：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="factoryPaymentMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入厂家打款金额"
+                           class="layui-input payMoney" th:value="${e.factoryPaymentMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">赠品：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="gift"
+                           autocomplete="off" placeholder="请输入赠品名称"
+                           class="layui-input" th:value="${e.gift}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">赠品金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="giftMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入赠品金额"
+                           class="layui-input payMoney" th:value="${e.giftMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手续费：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="serviceChargeMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入手续费金额"
+                           class="layui-input payMoney" th:value="${e.serviceChargeMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">踢脚线：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="kickLineMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入踢脚线金额"
+                           class="layui-input payMoney" th:value="${e.kickLineMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">辅料：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="accessoriesMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入辅料金额"
+                           class="layui-input payMoney" th:value="${e.accessoriesMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">五金锁具：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="hardwareLockMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入五金锁具金额"
+                           class="layui-input payMoney" th:value="${e.hardwareLockMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">销售提成：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="salesCommissionMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入销售提成金额"
+                           class="layui-input payMoney" th:value="${e.salesCommissionMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">渠道提成：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="channelCommissionMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入渠道提成金额"
+                           class="layui-input payMoney" th:value="${e.channelCommissionMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">运费：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="freightMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入运费金额"
+                           class="layui-input payMoney" th:value="${e.freightMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">上楼费：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="upstairsFeeMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入上楼费金额"
+                           class="layui-input payMoney" th:value="${e.upstairsFeeMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">安装费：</label>
+                <div class="layui-input-block">
+                    <input type="text" th:name="installFeeMoney" lay-verify="number"
+                           onkeyup="this.value=this.value.toString().match(/^\d{0,9}(?:\.\d{0,2})?/)"
+                           autocomplete="off" placeholder="请输入安装费金额"
+                           class="layui-input payMoney" th:value="${e.installFeeMoney}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">总金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" readonly id="payAllMoney"
+                           autocomplete="off"
+                           class="layui-input profitMoneys" th:value="${e.payAllMoney}" style="background-color:#BEBEBE">
+                </div>
+            </div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 60px; margin-left: 40px">
+                <legend style="font-size: 25px">利润</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <label class="layui-form-label">利润：</label>
+                <div class="layui-input-block">
+                    <input type="text" readonly id="profitMoney"
+                           autocomplete="off"
+                           class="layui-input" th:value="${e.profitMoney}" style="background-color:#BEBEBE">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-radius" lay-submit lay-filter="consumer-record-form">
+                        提交
+                    </button>
+                    <button type="reset" class="layui-btn layui-btn-primary layui-btn-radius">重置</button>
+                    <a href="/consumer-record/index" class="layui-btn layui-btn-radius" target="_self">返回</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/consumerRecordJs.js}"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chang.dao.ConsumerRecordDao">
+
+    <sql id="BASE_LIST">
+        id, consumer_id, consumer_name, consumer_address, tel, access_time_date,
+        install_date, contract_money, money_one, money_two,
+         money_three, disburse_money_one, factory_payment_money,
+         gift, gift_money, service_charge_money, kick_line_money,
+         accessories_money, hardware_lock_money, sales_commission_money,
+         channel_commission_money, freight_money, upstairs_fee_money,
+         install_fee_money, create_user_id, create_date, update_user_id, update_date
+    </sql>
+
+    <select id="list" resultType="com.chang.entity.ConsumerRecordEntity">
+      SELECT
+      <include refid="BASE_LIST"/>
+        FROM timber_consumer_record
+        WHERE 1=1
+        <if test="consumerName != null and consumerName != ''">
+            AND consumer_name LIKE '%${consumerName}%'
+        </if>
+        <if test="tel != null and tel != ''">
+            AND tel LIKE '%${tel}%'
+        </if>
+        <if test="consumerAddress != null and consumerAddress != ''">
+            AND consumer_address LIKE '%${consumerAddress}%'
+        </if>
+        <if test="accessTimeDates != null">
+            AND access_time_date &gt;= '${accessTimeDates[0]}'
+            AND access_time_date &lt;= '${accessTimeDates[1]}'
+        </if>
+    </select>
+    <select id="getById" resultType="com.chang.entity.ConsumerRecordEntity">
+      SELECT
+      <include refid="BASE_LIST"/>
+        FROM timber_consumer_record
+        WHERE id = #{value}
+    </select>
+
+    <select id="getByConsumerId" resultType="com.chang.entity.ConsumerRecordEntity">
+      SELECT
+        id
+        FROM timber_consumer_record
+        WHERE consumer_id = #{value}
+    </select>
+
+
+    <insert id="insertConsumerRecord">
+        INSERT INTO timber_consumer_record SET
+        <if test="id != null">
+            id = #{id},
+        </if>
+        <if test="consumerId != null">
+            consumer_id = #{consumerId},
+        </if>
+        <if test="consumerName != null">
+            consumer_name = #{consumerName},
+        </if>
+        <if test="tel != null">
+            tel = #{tel},
+        </if>
+        <if test="consumerAddress != null">
+            consumer_address = #{consumerAddress},
+        </if>
+        <if test="accessTimeDate != null">
+            access_time_date = #{accessTimeDate},
+        </if>
+        <if test="installDate != null">
+            install_date = #{installDate},
+        </if>
+        <if test="contractMoney != null">
+            contract_money = #{contractMoney},
+        </if>
+        <if test="moneyOne != null">
+            money_one = #{moneyOne},
+        </if>
+        <if test="moneyTwo != null">
+            money_two = #{moneyTwo},
+        </if>
+        <if test="moneyThree != null">
+            money_three = #{moneyThree},
+        </if>
+        <if test="disburseMoneyOne != null">
+            disburse_money_one = #{disburseMoneyOne},
+        </if>
+        <if test="factoryPaymentMoney != null">
+            factory_payment_money = #{factoryPaymentMoney},
+        </if>
+        <if test="gift != null">
+            gift = #{gift},
+        </if>
+        <if test="giftMoney != null">
+            gift_money = #{giftMoney},
+        </if>
+        <if test="serviceChargeMoney != null">
+            service_charge_money = #{serviceChargeMoney},
+        </if>
+        <if test="kickLineMoney != null">
+            kick_line_money = #{kickLineMoney},
+        </if>
+        <if test="accessoriesMoney != null">
+            accessories_money = #{accessoriesMoney},
+        </if>
+        <if test="hardwareLockMoney != null">
+            hardware_lock_money = #{hardwareLockMoney},
+        </if>
+        <if test="salesCommissionMoney != null">
+            sales_commission_money = #{salesCommissionMoney},
+        </if>
+        <if test="channelCommissionMoney != null">
+            channel_commission_money = #{channelCommissionMoney},
+        </if>
+        <if test="freightMoney != null">
+            freight_money = #{freightMoney},
+        </if>
+        <if test="upstairsFeeMoney != null">
+            upstairs_fee_money = #{upstairsFeeMoney},
+        </if>
+        <if test="installFeeMoney != null">
+            install_fee_money = #{installFeeMoney},
+        </if>
+        <if test="createUserId != null">
+            create_user_id = #{createUserId},
+        </if>
+        <if test="updateUserId != null">
+            update_user_id = #{updateUserId},
+        </if>
+        create_date = now(),
+        update_date = now()
+    </insert>
+    <insert id="updateConsumerRecord">
+        UPDATE timber_consumer_record SET
+        <if test="consumerId != null">
+            consumer_id = #{consumerId},
+        </if>
+        <if test="consumerName != null">
+            consumer_name = #{consumerName},
+        </if>
+        <if test="consumerAddress != null">
+            consumer_address = #{consumerAddress},
+        </if>
+        <if test="tel != null">
+            tel = #{tel},
+        </if>
+        <if test="accessTimeDate != null">
+            access_time_date = #{accessTimeDate},
+        </if>
+        <if test="installDate != null">
+            install_date = #{installDate},
+        </if>
+        <if test="contractMoney != null">
+            contract_money = #{contractMoney},
+        </if>
+        <if test="moneyOne != null">
+            money_one = #{moneyOne},
+        </if>
+        <if test="moneyTwo != null">
+            money_two = #{moneyTwo},
+        </if>
+        <if test="moneyThree != null">
+            money_three = #{moneyThree},
+        </if>
+        <if test="disburseMoneyOne != null">
+            disburse_money_one = #{disburseMoneyOne},
+        </if>
+        <if test="factoryPaymentMoney != null">
+            factory_payment_money = #{factoryPaymentMoney},
+        </if>
+        <if test="gift != null">
+            gift = #{gift},
+        </if>
+        <if test="giftMoney != null">
+            gift_money = #{giftMoney},
+        </if>
+        <if test="serviceChargeMoney != null">
+            service_charge_money = #{serviceChargeMoney},
+        </if>
+        <if test="kickLineMoney != null">
+            kick_line_money = #{kickLineMoney},
+        </if>
+        <if test="accessoriesMoney != null">
+            accessories_money = #{accessoriesMoney},
+        </if>
+        <if test="hardwareLockMoney != null">
+            hardware_lock_money = #{hardwareLockMoney},
+        </if>
+        <if test="salesCommissionMoney != null">
+            sales_commission_money = #{salesCommissionMoney},
+        </if>
+        <if test="channelCommissionMoney != null">
+            channel_commission_money = #{channelCommissionMoney},
+        </if>
+        <if test="freightMoney != null">
+            freight_money = #{freightMoney},
+        </if>
+        <if test="upstairsFeeMoney != null">
+            upstairs_fee_money = #{upstairsFeeMoney},
+        </if>
+        <if test="installFeeMoney != null">
+            install_fee_money = #{installFeeMoney},
+        </if>
+        <if test="updateUserId != null">
+            update_user_id = #{updateUserId},
+        </if>
+        update_date = now()
+        WHERE id = #{id}
+    </insert>
+    <delete id="deleteById">
+        DELETE FROM timber_consumer_record WHERE id = #{value}
+    </delete>
+    <update id="updateConsumerRecordByConsumerId">
+        UPDATE timber_consumer_record SET
+         consumer_name = #{consumerName},
+         tel = #{tel}
+         WHERE consumer_id = #{consumerId}
+    </update>
+
+</mapper>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>客户信息列表</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"/>
+</head>
+<style>
+    .layui-table-col-special .layui-table-cell {
+        height:auto;
+        overflow:visible;
+        text-overflow:inherit;
+        white-space: normal;
+    }
+
+</style>
+<body class="layui-layout-body">
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs layui-btn-radius" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+</script>
+<div class="layui-layout layui-layout-admin">
+    <!-- 引入导航代码  -->
+    <div th:include="navigation :: navigation(1)"></div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="paltformTable layui-form">
+                客户名称：
+                <div class="layui-inline">
+                    <input class="layui-input" name="consumerName" id="consumerNameInput" autocomplete="off">
+                </div>
+                客户电话：
+                <div class="layui-inline">
+                    <input class="layui-input" name="tel" id="telInput" autocomplete="off">
+                </div>
+
+                <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
+            <table class="layui-table" lay-size="lg" style="font-size: 26px" lay-filter="logTable" id="logTable"></table>
+        </div>
+    </div>
+
+    <div th:include="footer :: footer"></div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/consumerInfoJs.js}"></script>
+
+</body>
